@@ -19,6 +19,7 @@
     "mongoose": "^5.8.3",
     "node-run-cmd": "^1.0.1",
     "ravencore-lib": "^1.0.3",
+    "ravend-rpc": "^1.0.5",
     "uuid-mongodb": "^2.1.2"
   }
 }

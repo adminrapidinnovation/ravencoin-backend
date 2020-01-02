@@ -1,6 +1,7 @@
-const { exec } = require("child_process");
 const Raven = require("../module/raven");
 const ravencore = require("ravencore-lib");
+const RpcClient = require('ravend-rpc');
+
 Raven.getaddress = async (req, res) => {
   const privatekey = new ravencore.PrivateKey();
   var publicKey = ravencore.PublicKey(privatekey);
@@ -14,17 +15,31 @@ Raven.getaddress = async (req, res) => {
     Address: raven.address
   });
 };
-// Raven.issueAssets = async (req, res) => {
-//   exec(
-//     `raven-cli issue ${req.body.Asset_name} ${qty} ${to_address} ${change_address} ${units} true`,
-//     (err, resp) => {
-//       if (resp) {
-//         console.log(resp);
-//         res.send(resp);
-//       } else {
-//         console.log(err);
-//       }
-//     }
-//   );
-// };
+
+var config = {
+  protocol: 'http',
+  user: 'ravencoin',
+  pass: 'local321',
+  host: '127.0.0.1',
+  port: '8766',
+};
+var rpc = new RpcClient(config);
+
+Raven.issueAssets = (req, resp) => {
+  rpc.issue(req.body.Assets_name, req.body.qty, req.body.toAddress, req.body.changeAddress, req.body.units, req.body.reissuable, req.body.has_ipfs, req.body.ipfs_hash, (err, res) => {
+    if (err) resp.status(400).send(err)
+    else {
+      resp.status(200).send(res)
+    }
+  })
+};
+
+Raven.transferAssets = (req, resp) => {
+  rpc.transfer(req.body.Assets_name, req.body.qty, req.body.to_address, (err, res) => {
+    if (err) resp.status(400).send(err)
+    else resp.status(200).send(res)
+
+  })
+};
+
 module.exports = Raven;
