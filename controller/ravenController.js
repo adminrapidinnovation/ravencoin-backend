@@ -3,7 +3,7 @@ const ravencore = require("ravencore-lib");
 const RpcClient = require('ravend-rpc');
 
 Raven.getaddress = async (req, res) => {
-  const privatekey = new ravencore.PrivateKey();
+  const privatekey = new ravencore.PrivateKey('testnet');
   var publicKey = ravencore.PublicKey(privatekey);
   let raven = new Raven();
   raven.privateKey = privatekey.toString();
