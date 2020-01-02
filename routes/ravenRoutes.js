@@ -3,7 +3,7 @@ const router = express.Router();
 const controller = require("../controller/ravenController");
 
 router.get("/address", controller.getaddress);
-router.post("/issue_asset", controller.issueAssets);
+// router.post("/issue_asset", controller.issueAssets);
 // router.post("/transfer", controller.transferAssets);
 
 module.exports = router;

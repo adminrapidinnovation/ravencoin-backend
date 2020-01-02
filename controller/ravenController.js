@@ -10,7 +10,7 @@ Raven.getaddress = async (req, res) => {
   raven.address = privatekey.toAddress();
   res.status(200).send({
     PrivateKey: raven.privateKey,
-    PublicKey: publicKey,
+    PublicKey: raven.publicKey,
     Address: raven.address
   });
 };
